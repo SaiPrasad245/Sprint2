@@ -3,6 +3,8 @@ package com.cg.sprint2.payment.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.cg.sprint2.payment.dao.TransferAmountDAO;
@@ -18,24 +20,26 @@ public class TransferAmountService {
 		this.tadao = tadao;
 	}
 
-	public void transferAmountToAnotherWallet(String smobileno, String rmobileno, double amt) 
+	public ResponseEntity<String> transferAmountToAnotherWallet(String smobileno, String rmobileno, double amt) 
 	{
-		if(tadao.findById(smobileno)!=null)
-		{
+		String msg="";
 			Optional<User> u = tadao.findById(smobileno);
-			if(tadao.findById(rmobileno)!=null);
+			if(tadao.findById(rmobileno).isPresent());
 			{
 				if(amt<u.get().getWalletbalance())
 				{
-					System.out.println("Amount Transferred");
+					msg="Amount Transferred";
 					tadao.deductFromSenderWallet(amt, smobileno);
 					tadao.addToReciverWallet(amt, rmobileno);
+					return new ResponseEntity<String>(msg,HttpStatus.OK);
 				}
-				else
-				   System.out.println("Insufficient Balance");		
+				else {
+				   msg="Insufficient Balance";
+				return new ResponseEntity<String>(msg,HttpStatus.BAD_REQUEST);
+			    }
 			}
-		}}
-		else
-			System.out.println("Enter Correct Mobile No");		
-	}
+			else
+				msg="The Number that the money is to be sent has to be Registerd on the Application";
+				return new ResponseEntity<String>(msg,HttpStatus.BAD_REQUEST);
+	}	
 }
