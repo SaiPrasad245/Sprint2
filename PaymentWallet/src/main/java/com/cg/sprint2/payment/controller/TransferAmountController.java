@@ -21,7 +21,7 @@ public class TransferAmountController {
 	@GetMapping(value="/transferAmount/{smobileno}/{rmobileno}/{amt}")
 	public ResponseEntity<String> transferAmountToAnotherWallet(@PathVariable String smobileno,@PathVariable String rmobileno,@PathVariable double amt)
 	{
-		return taservice.transferAmountToAnotherWallet(smobileno,rmobileno,amt);
+		return taservice.transferAmountToAnotherWalletUser(smobileno,rmobileno,amt);
 	}
 
 }

@@ -26,8 +26,16 @@ public class CardDetailsService {
 	public CardDetails addcard(CardDetails card) {
 		return cdao.save(card);
 	}
-
+	
 	// Show All Cards
+	@Transactional(readOnly = true)
+	public List<CardDetails> getCarddetails() {
+		return cdao.findAll();
+		
+			
+	}
+
+	// Show All Cards By Mobileno
 	@Transactional(readOnly = true)
 	public List<CardDetails> getCarddetailsByMobileno(String mobileno) {
 		List<String> mb = new ArrayList<>();
@@ -38,13 +46,22 @@ public class CardDetailsService {
 	// Adding Card To The User
 	public ResponseEntity<String> addNewCard(CardDetails cdetails, String mobileno) {
 		cdetails.setMobileno(mobileno);
-		String smsg = "Card Added";
-		String umsg = "Card Addition Failed";
-
-		if (addcard(cdetails) != null) {
-			return new ResponseEntity<String>(smsg, HttpStatus.ACCEPTED);
-		} else {
-			return new ResponseEntity<String>(umsg, HttpStatus.BAD_REQUEST);
+		List<CardDetails> cd=getCarddetails();
+		for (CardDetails cdet : cd) 
+		{
+			if(((cdet.getCardno()==cdetails.getCardno())&&(cdet.getCvv()==cdetails.getCvv())&&(cdet.getExpirydate()==cdetails.getExpirydate())))
+			{
+				System.out.println(cdetails.getCardbalance());
+				cdetails.setCardbalance(cdet.getCardbalance());
+				System.out.println(cdetails.getCardbalance());
+				addcard(cdetails);
+				String smsg = "Card Added";
+			    return new ResponseEntity<String>(smsg, HttpStatus.ACCEPTED);
+				
+			}
 		}
+		addcard(cdetails);
+		String smsg = "Card Added";
+	    return new ResponseEntity<String>(smsg, HttpStatus.OK);
 	}
 }

@@ -1,7 +1,12 @@
 package com.cg.sprint2.payment.dto;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -14,6 +19,11 @@ import javax.persistence.Table;
 	String password;
 	String email;
 	double walletbalance=0;
+	
+	@OneToMany(targetEntity=CardDetails.class,cascade=CascadeType.ALL)
+	@JoinColumn(name="mobileno")
+	List<CardDetails> carddetails;
+	
 	public User(String name, String mobileno, String password, String email, double walletbalance) {
 		super();
 		this.name = name;

@@ -24,11 +24,18 @@ public class CardDetailsController {
 		return cservice.addNewCard(cdetails, mobileno);
 	}
 
-	// Get All Added Cards
+	// Get All Added Cards By Mobileno
 	@GetMapping(value = "/showAllCards/{mobileno}", produces = "application/json")
-		public List<CardDetails> showAllCards(@PathVariable String mobileno)
+		public List<CardDetails> showAllCardsByMobileno(@PathVariable String mobileno)
 	{
 			List<CardDetails> cadDetailsList = cservice.getCarddetailsByMobileno(mobileno);
+			return cadDetailsList;
+    }
+	// Show All Cards
+	@GetMapping(value="/showAllCards/", produces = "application/json")
+	public List<CardDetails> showAllCards()
+	{
+			List<CardDetails> cadDetailsList =cservice.getCarddetails();
 			return cadDetailsList;
     }
 }
