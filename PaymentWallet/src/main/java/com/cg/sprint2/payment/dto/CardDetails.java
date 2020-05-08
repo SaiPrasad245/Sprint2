@@ -1,7 +1,6 @@
 package com.cg.sprint2.payment.dto;
 
 import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,12 +8,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="carddetails",schema="PRASAD")
+@Table(name="carddetails")
 public class CardDetails {
 	@Id
-	@Column(name="mobileno")
+	@Column(name="mobile_no")
 	@NotNull
-	String mobileno;
+	String mobile_no; 
+	String cardholdername;
 	@Column(name="cardno")
 	@NotNull
 	long cardno;
@@ -29,27 +29,41 @@ public class CardDetails {
 	LocalDate expirydate;
 	@Column(name="cbalance")
 	double cardbalance=50000;
-	
+    String  upiid;
+	 int upipin;
+    
 	public CardDetails() {
 		super();
 	}
 
-	public CardDetails(String mobileno, long cardno, String cardtype, int cvv, LocalDate expirydate, double cardbalance) {
+	public CardDetails(@NotNull String mobile_no, String cardholdername, @NotNull long cardno, @NotNull String cardtype,
+			@NotNull int cvv, @NotNull LocalDate expirydate, double cardbalance, String upiid, int upipin) {
 		super();
-		this.mobileno = mobileno;
+		this.mobile_no = mobile_no;
+		this.cardholdername = cardholdername;
 		this.cardno = cardno;
 		this.cardtype = cardtype;
 		this.cvv = cvv;
 		this.expirydate = expirydate;
 		this.cardbalance = cardbalance;
+		this.upiid = upiid;
+		this.upipin = upipin;
 	}
 
-	public String getMobileno() {
-		return mobileno;
+	public String getMobile_no() {
+		return mobile_no;
 	}
 
-	public void setMobileno(String mobileno) {
-		this.mobileno = mobileno;
+	public void setMobile_no(String mobile_no) {
+		this.mobile_no = mobile_no;
+	}
+
+	public String getCardholdername() {
+		return cardholdername;
+	}
+
+	public void setCardholdername(String cardholdername) {
+		this.cardholdername = cardholdername;
 	}
 
 	public long getCardno() {
@@ -91,7 +105,22 @@ public class CardDetails {
 	public void setCardbalance(double cardbalance) {
 		this.cardbalance = cardbalance;
 	}
-	
-	
 
+	public String getUpiid() {
+		return upiid;
+	}
+
+	public void setUpiid(String upiid) {
+		this.upiid = upiid;
+	}
+
+	public int getUpipin() {
+		return upipin;
+	}
+
+	public void setUpipin(int upipin) {
+		this.upipin = upipin;
+	}
+
+	
 }

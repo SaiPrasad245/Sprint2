@@ -6,8 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.cg.sprint2.payment.dao.UserDAO;
 import com.cg.sprint2.payment.dto.User;
 
@@ -28,6 +26,7 @@ public class UserService {
 	   return udao.findById(mobileno); 
    }
 	
+	@Transactional
 	// Registration of new user
 	public User createUser(User user)
 	{
@@ -54,19 +53,6 @@ public class UserService {
 				System.out.println("Invalid User");
 				return new ResponseEntity<Optional<User>>(empty,HttpStatus.NOT_FOUND);
 			}
-	 }
-	// Adding User To the Payment Application
-	public ResponseEntity<String> addUser(@RequestBody User user)
-	  {
-		  String smsg="Registration Sucessfully";
-			 String umsg="Registration Failed";
-			 if(createUser(user)!=null)
-			 {
-				 return new ResponseEntity<String>(smsg,HttpStatus.ACCEPTED);
-			 }
-			 else
-			 {
-				 return new ResponseEntity<String>(umsg,HttpStatus.BAD_REQUEST);
-			 }
-	  }
+	}
+	
 }

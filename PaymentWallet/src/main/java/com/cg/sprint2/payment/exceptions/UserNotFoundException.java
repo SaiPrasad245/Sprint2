@@ -1,6 +1,9 @@
 package com.cg.sprint2.payment.exceptions;
 
-public class UserNotFoundException extends RuntimeException {
-	
-
-}
+	@SuppressWarnings("serial")
+	public class UserNotFoundException extends Exception {
+		
+		public UserNotFoundException(String errorMsg){
+			super(errorMsg);
+		}
+	}

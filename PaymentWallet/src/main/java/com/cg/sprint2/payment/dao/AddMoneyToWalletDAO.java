@@ -18,7 +18,13 @@ public interface AddMoneyToWalletDAO extends JpaRepository<CardDetails, String> 
 
 	 @Transactional
 	 @Modifying
-	 @Query("update CardDetails cd set  cd.cardbalance=cd.cardbalance-:amount where cd.cardno=:cardno")
+	 @Query("update CardDetails cd set  cd.cardbalance=cd.cardbalance-:amount where (cd.cardno=:cardno)" )
 	 public void deductBalance(double amount,long cardno);
+	 
+	 @Transactional
+	 @Modifying
+	 @Query("update CardDetails cd set  cd.upipin=:upipin where (cd.mobile_no=:mobileno)" )
+	 public void setUpi(int upipin,String mobileno);
+	 
 
 }
